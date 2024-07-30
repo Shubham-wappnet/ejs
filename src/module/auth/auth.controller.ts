@@ -6,9 +6,12 @@ import {
   HttpStatus,
   Param,
   Post,
+  Query,
   Render,
+  Res,
   UsePipes,
 } from '@nestjs/common';
+import { Response } from 'express';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -64,9 +67,21 @@ export class AuthController {
     type: RegisterViewModel,
     description: registerApi.BAD_REQUEST_RESPONSE_DESCRIPTION,
   })
-  async register(@Body() payload: RegisterDTO): Promise<RegisterViewModel> {
+  async register(
+    @Body() payload: RegisterDTO,
+    @Res() res: Response,
+  ): Promise<any> {
     const result = await this.authService.registerUser(payload);
-    return result;
+    if (result) {
+      return res.redirect(`/success?name=${encodeURIComponent(payload.name)}`);
+    }
+    //return result;
+  }
+
+  @Get('success')
+  @Render('success')
+  getSuccessPage(@Query('name') name: string) {
+    return { name };
   }
 
   @Get('login')

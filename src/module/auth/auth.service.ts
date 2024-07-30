@@ -13,7 +13,7 @@ import {
   ResetPasswordViewModel,
 } from 'src/dto/auth';
 import { User } from 'src/entities';
-import { BCRYPT_ROUNDS, TokenTime, ValidateTokenType } from 'src/helpers';
+import { BCRYPT_ROUNDS, TokenTime } from 'src/helpers';
 import { DeepPartial, Repository } from 'typeorm';
 import { hashSync, compareSync } from 'bcrypt';
 import { Itoken } from 'src/interfaces/token';
@@ -183,20 +183,19 @@ export class AuthService {
   private async verifyToken(
     token: string,
     options: JwtVerifyOptions,
-    type?: ValidateTokenType,
   ): Promise<Itoken> {
     try {
       return await this.jwtService.verifyAsync<Itoken>(token, options);
     } catch (error) {
       if (error instanceof TokenExpiredError) {
-        if (type === ValidateTokenType.VALIDATE_TOKEN) {
-          throw new UnauthorizedException();
-        } else {
-          throw new BadRequestException({
-            status: false,
-            message: 'Token is expired',
-          });
-        }
+        throw new UnauthorizedException('Token expired');
+      } else {
+        console.error('Token verification error:', error.message, {
+          token,
+          options,
+          stack: error.stack,
+        });
+        throw new BadRequestException('Invalid Token');
       }
     }
   }
