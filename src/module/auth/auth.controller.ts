@@ -73,9 +73,14 @@ export class AuthController {
   ): Promise<any> {
     const result = await this.authService.registerUser(payload);
     if (result) {
-      return res.redirect(`/success?name=${encodeURIComponent(payload.name)}`);
+      return res.redirect(
+        `/auth/success?name=${encodeURIComponent(payload.name)}`,
+      );
+    } else {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        error: 'Registration failed.',
+      });
     }
-    //return result;
   }
 
   @Get('success')
@@ -105,9 +110,21 @@ export class AuthController {
     description: loginAPI.BAD_REQUEST_RESPONSE_DESCRIPTION,
     type: LoginViewModel,
   })
-  async login(@Body() payload: LoginDto) {
+  async login(@Body() payload: LoginDto, @Res() res: Response) {
     const result = await this.authService.loginUser(payload);
-    return result;
+    if (result) {
+      return res.redirect('/auth/welcome');
+    } else {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        error: 'Login failed.',
+      });
+    }
+  }
+
+  @Get('welcome')
+  @Render('welcome')
+  getWelcomePage() {
+    return {};
   }
 
   @Get('forgot-password')
@@ -164,4 +181,23 @@ export class AuthController {
     const result = await this.authService.resetPassword(token, payload);
     return result;
   }
+
+  // @Get('destination')
+  // @Render('destination')
+  // getDestinationPage() {
+  //   return {};
+  // }
+
+  // @Post('destination')
+  // @HttpCode(HttpStatus.OK)
+  // async getDestination(@Res() res: Response) {
+  //   const result = await this.authService.findDestination();
+  //   if (result) {
+  //     return res.redirect('/auth/destination');
+  //   } else {
+  //     return res.status(HttpStatus.BAD_REQUEST).json({
+  //       error: 'Destination failed.',
+  //     });
+  //   }
+  // }
 }

@@ -68,7 +68,7 @@
             <div id="passwordError" class="error-message"></div>
 
             <button type="submit">Sign up</button>
-            <h3>Already Have An Account? <a href="#">Sign in</a></h3>
+            <h3>Already Have An Account? <a href="/auth/login">Sign in</a></h3>
         </form>
     </div>
     <script>
@@ -110,29 +110,6 @@
             if (!valid) {
                 event.preventDefault();
             }
-            // else {
-            //     fetch('/auth/register', {
-            //         method: 'POST',
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //         },
-            //         body: JSON.stringify({
-            //             email: email,
-            //             name: name,
-            //             password: password,
-            //         }),
-            //     })
-            //     .then(response => {
-            //         if (response.ok) {
-            //             window.location.href = `/success?name=${encodeURIComponent(name)}`;
-            //         } else {
-            //             return response.json();
-            //         }
-            //     })
-            //     .catch(error => {
-            //         console.error('Error:', error);
-            //     });
-            // }
             
             function clearErrorMessage(){
                 document.getElementById('passwordError').textContent='';

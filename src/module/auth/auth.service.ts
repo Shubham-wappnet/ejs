@@ -148,6 +148,13 @@ export class AuthService {
     };
   }
 
+  // public async findDestination(): Promise<RegisterViewModel> {
+  //   return {
+  //     status: true,
+  //     message: 'Get your destination',
+  //   };
+  // }
+
   private async findUserByEmail(email: string): Promise<User> {
     try {
       const user = await this.userRepository.findOne({ where: { email } });

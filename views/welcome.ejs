@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Blog</title>
+    <style>
+        
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+    
+        header {
+            background-color: #4699f7;
+            color: #fff;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            margin-left: -120px;
+
+        }
+
+        header nav a {
+            color: #fff;
+            margin-left: 20px;
+            text-decoration: none;
+        }
+
+        header nav a:hover {
+            text-decoration: underline;
+        }
+
+       
+        .hero {
+            position: relative;
+            background-position: center;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            margin-top: 60px;
+        }
+
+        .hero img{
+            width: 500px; 
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h2 {
+            font-size: 2.5em;
+            margin: 0;
+            line-height: 1.3;
+            color: #333;
+
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin: 20px 0;
+            color:chocolate;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1em;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .content{
+            margin-top: 50px; 
+            padding: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Travel Blog</h1>
+            <nav>
+                <a href="#" onclick="showPage('home')">Home</a>
+                <a href="#" onclick="showPage('destinations')">Destination</a>
+                <a href="#" onclick="showPage('blog')">Blog</a>
+                <a href="#" onclick="showPage('about')">About Us</a>
+                <a href="#" onclick="showPage('contact')">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <img src="pine_hill.jpg" alt="" >
+            <h2>“The world is a book and those who do not travel read only one page.”</h2>
+            <p>— Saint Augustine</p>
+            <a href="" class="btn">Start Exploring</a>
+        </div>
+    </section>
+
+
+    <div class="content">
+        <div id="home" class="page">
+            <h1>Welcome to the Travel Blog</h1>
+            <p>This is the home page. Explore our destinations, blog posts, and more!</p>
+        </div>
+
+        <div id="destinations" class="page hidden">
+            <h1>Destinations</h1>
+            <p>Here are some amazing places you can visit.</p>
+        </div>
+
+        <div id="blog" class="page hidden">
+            <h1>Blog</h1>
+            <p>Read our latest blog posts about travel.</p>
+        </div>
+
+        <div id="about" class="page hidden">
+            <h1>About Us</h1>
+            <p>Learn more about our travel blog and the team behind it.</p>
+        </div>
+
+        <div id="contact" class="page hidden">
+            <h1>Contact</h1>
+            <p>Get in touch with us for any inquiries.</p>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.add('hidden');
+            });
+
+            // Show the selected page
+            const pageToShow = document.getElementById(pageId);
+            if (pageToShow) {
+                pageToShow.classList.remove('hidden');
+            }
+        }
+
+        // Optionally, show the home page by default
+        showPage('home');
+    </script>
+</body>
+</html>
