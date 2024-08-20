@@ -118,40 +118,33 @@ export class AuthService {
     };
   }
 
-  public async resetPassword(
-    token: string,
-    payload: ResetPasswordDTO,
-  ): Promise<ResetPasswordViewModel> {
-    const data = await this.verifyToken(token, {});
-    if (!data) {
-      throw new BadRequestException({
-        status: false,
-        message: 'Invalid Token',
-      });
-    }
-    const user = await this.findUserByEmail(data.email);
-    if (!user) {
-      throw new BadRequestException({
-        status: false,
-        message: 'Account not found',
-      });
-    }
-    const hashPassword = (password: string): string => {
-      return hashSync(password, BCRYPT_ROUNDS);
-    };
-    user.password = hashPassword(payload.password);
-    await this.updateUser(user);
+  // public async resetPassword(
+  //   token: string,
+  //   payload: ResetPasswordDTO,
+  // ): Promise<ResetPasswordViewModel> {
+  //   const data = await this.verifyToken(token, {});
+  //   if (!data) {
+  //     throw new BadRequestException({
+  //       status: false,
+  //       message: 'Invalid Token',
+  //     });
+  //   }
+  //   const user = await this.findUserByEmail(data.email);
+  //   if (!user) {
+  //     throw new BadRequestException({
+  //       status: false,
+  //       message: 'Account not found',
+  //     });
+  //   }
+  //   const hashPassword = (password: string): string => {
+  //     return hashSync(password, BCRYPT_ROUNDS);
+  //   };
+  //   user.password = hashPassword(payload.password);
+  //   await this.updateUser(user);
 
-    return {
-      status: true,
-      message: 'Password reset successfully',
-    };
-  }
-
-  // public async findDestination(): Promise<RegisterViewModel> {
   //   return {
   //     status: true,
-  //     message: 'Get your destination',
+  //     message: 'Password reset successfully',
   //   };
   // }
 

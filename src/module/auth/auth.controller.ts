@@ -69,18 +69,19 @@ export class AuthController {
   })
   async register(
     @Body() payload: RegisterDTO,
-    @Res() res: Response,
+    //@Res() res: Response,
   ): Promise<any> {
     const result = await this.authService.registerUser(payload);
-    if (result) {
-      return res.redirect(
-        `/auth/success?name=${encodeURIComponent(payload.name)}`,
-      );
-    } else {
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        error: 'Registration failed.',
-      });
-    }
+    return result;
+    // if (result) {
+    //   return res.redirect(
+    //     `/auth/success?name=${encodeURIComponent(payload.name)}`,
+    //   );
+    // } else {
+    //   return res.status(HttpStatus.BAD_REQUEST).json({
+    //     error: 'Registration failed.',
+    //   });
+    // }
   }
 
   @Get('success')
@@ -151,53 +152,34 @@ export class AuthController {
     return result;
   }
 
-  @Get('reset-password')
-  @Render('reset_password')
-  getResetPassword() {
-    return {};
-  }
-
-  @Post('reset-password')
-  @HttpCode(HttpStatus.OK)
-  @ApiParam({
-    name: forgotPasswordApi.TOKEN.NAME,
-    format: forgotPasswordApi.TOKEN.FORMAT,
-    description: forgotPasswordApi.TOKEN.DESCRIPTION,
-    required: true,
-  })
-  @ApiOperation({ summary: resetPasswordApi.SUMMARY })
-  @ApiOkResponse({
-    description: resetPasswordApi.OK_RESPONSE_DESCRIPTION,
-    type: ResetPasswordViewModel,
-  })
-  @ApiBadRequestResponse({
-    description: resetPasswordApi.BAD_REQUEST_RESPONSE_DESCRIPTION,
-    type: RegisterViewModel,
-  })
-  async resetPassword(
-    @Param('token') token: string,
-    @Body() payload: ResetPasswordDTO,
-  ): Promise<ResetPasswordViewModel> {
-    const result = await this.authService.resetPassword(token, payload);
-    return result;
-  }
-
-  // @Get('destination')
-  // @Render('destination')
-  // getDestinationPage() {
+  // @Get('reset-password')
+  // @Render('reset_password')
+  // getResetPassword() {
   //   return {};
   // }
 
-  // @Post('destination')
+  // @Post('reset-password')
   // @HttpCode(HttpStatus.OK)
-  // async getDestination(@Res() res: Response) {
-  //   const result = await this.authService.findDestination();
-  //   if (result) {
-  //     return res.redirect('/auth/destination');
-  //   } else {
-  //     return res.status(HttpStatus.BAD_REQUEST).json({
-  //       error: 'Destination failed.',
-  //     });
-  //   }
+  // @ApiParam({
+  //   name: forgotPasswordApi.TOKEN.NAME,
+  //   format: forgotPasswordApi.TOKEN.FORMAT,
+  //   description: forgotPasswordApi.TOKEN.DESCRIPTION,
+  //   required: true,
+  // })
+  // @ApiOperation({ summary: resetPasswordApi.SUMMARY })
+  // @ApiOkResponse({
+  //   description: resetPasswordApi.OK_RESPONSE_DESCRIPTION,
+  //   type: ResetPasswordViewModel,
+  // })
+  // @ApiBadRequestResponse({
+  //   description: resetPasswordApi.BAD_REQUEST_RESPONSE_DESCRIPTION,
+  //   type: RegisterViewModel,
+  // })
+  // async resetPassword(
+  //   @Param('token') token: string,
+  //   @Body() payload: ResetPasswordDTO,
+  // ): Promise<ResetPasswordViewModel> {
+  //   const result = await this.authService.resetPassword(token, payload);
+  //   return result;
   // }
 }
